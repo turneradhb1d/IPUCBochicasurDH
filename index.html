@@ -395,39 +395,90 @@ body.loading .site{opacity:0;transform:scale(.98);filter:blur(6px);}
 .hero{
     position:relative;
     overflow:hidden;
-    background:
-        linear-gradient(90deg,
-            #ffffff 0%, #ffffff 18%,
-            var(--primary) 18%, var(--primary) 82%,
-            #ffffff 82%, #ffffff 100%);
+    background:#ffffff;
     padding:15px 0 25px;
     border-bottom:4px solid var(--orange);
 }
 
-/* curva izquierda */
-.hero::before{
-    content:"";
+/* Bloque azul animado (centro + curvas, misma forma del diseño original) */
+.hero-bg{
     position:absolute;
-    left:18%;
-    top:0;
-    width:180px;
-    height:100%;
-    background:var(--primary);
+    top:0;bottom:0;
+    left:calc(18% - 90px);
+    right:calc(18% - 90px);
     border-bottom-left-radius:180px;
-    transform:translateX(-50%);
+    border-bottom-right-radius:180px;
+    overflow:hidden;
+    z-index:0;
+    background:linear-gradient(120deg,#061a4a 0%,#0b3d91 25%,#1a56c9 50%,#0b3d91 75%,#061a4a 100%);
+    background-size:300% 300%;
+    animation:heroShift 14s ease-in-out infinite;
+    box-shadow:inset 0 -35px 60px rgba(0,0,0,.25);
+}
+@keyframes heroShift{
+    0%,100%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
 }
 
-/* curva derecha */
-.hero::after{
+/* textura de puntos */
+.hero-bg::before{
     content:"";
     position:absolute;
-    right:18%;
-    top:0;
-    width:180px;
-    height:100%;
-    background:var(--primary);
-    border-bottom-right-radius:180px;
-    transform:translateX(50%);
+    inset:0;
+    background-image:radial-gradient(rgba(255,255,255,.13) 1px, transparent 1.5px);
+    background-size:18px 18px;
+    -webkit-mask:radial-gradient(ellipse at 50% 35%, #000 10%, transparent 70%);
+            mask:radial-gradient(ellipse at 50% 35%, #000 10%, transparent 70%);
+}
+
+/* destello de luz que cruza */
+.hero-bg::after{
+    content:"";
+    position:absolute;
+    top:-50%;bottom:-50%;
+    left:-40%;
+    width:30%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.16),transparent);
+    transform:skewX(-20deg);
+    animation:heroShine 7s ease-in-out infinite;
+}
+@keyframes heroShine{
+    0%{left:-40%;}
+    45%,100%{left:120%;}
+}
+
+/* luces suaves en movimiento */
+.hero-glow{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(45px);
+    animation:glowMove 10s ease-in-out infinite;
+}
+.hero-glow.g1{width:260px;height:260px;background:#ff7b00;opacity:.28;left:6%;bottom:-150px;}
+.hero-glow.g2{width:300px;height:300px;background:#3d7bff;opacity:.5;top:-170px;right:8%;animation-delay:-4s;}
+.hero-glow.g3{width:180px;height:180px;background:#f6c25b;opacity:.2;left:45%;top:-120px;animation-delay:-7s;}
+@keyframes glowMove{
+    0%,100%{transform:translate(0,0);}
+    50%{transform:translate(45px,20px);}
+}
+
+/* chispas que titilan */
+.spark{
+    position:absolute;
+    width:4px;height:4px;
+    border-radius:50%;
+    background:white;
+    box-shadow:0 0 8px 2px rgba(255,255,255,.6);
+    animation:twinkle 3s ease-in-out infinite;
+}
+.spark.s1{top:22%;left:12%;}
+.spark.s2{top:68%;left:26%;animation-delay:-1s;}
+.spark.s3{top:30%;right:14%;animation-delay:-2s;}
+.spark.s4{top:72%;right:30%;animation-delay:-.5s;}
+.spark.s5{top:14%;left:62%;animation-delay:-1.6s;}
+@keyframes twinkle{
+    0%,100%{opacity:0;transform:scale(.4);}
+    50%{opacity:1;transform:scale(1);}
 }
 
 /* recorte blanco curvo superior izquierdo */
@@ -890,6 +941,118 @@ main{
 .social a.map-l:hover{background:var(--orange);}
 
 /* =====================================================
+   ÚLTIMAS PUBLICACIONES
+===================================================== */
+.feed{margin-top:40px;}
+.feed-title{
+    text-align:center;
+    font-family:var(--f-title);
+    font-size:1.4rem;
+    color:var(--navy-800);
+    margin-bottom:18px;
+}
+.feed-tabs{
+    display:flex;
+    gap:6px;
+    max-width:460px;
+    margin:0 auto 26px;
+    padding:6px;
+    background:var(--bg);
+    border:1px solid var(--line);
+    border-radius:50px;
+}
+.feed-tab{
+    flex:1;
+    min-width:0;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:10px 8px;
+    border:none;
+    border-radius:50px;
+    background:transparent;
+    font-family:var(--f-label);
+    font-weight:700;
+    font-size:.8rem;
+    color:var(--muted);
+    cursor:pointer;
+    white-space:nowrap;
+    transition:.25s;
+}
+.feed-tab:hover{color:var(--navy-700);}
+.feed-tab.active{color:white;box-shadow:0 6px 16px rgba(0,0,0,.15);}
+.feed-tab.tt.active{background:#111;}
+.feed-tab.ig.active{background:linear-gradient(45deg,#f9a825,#e1306c,#833ab4);}
+.feed-tab.fb.active{background:#1877f2;}
+
+.feed-panel{
+    display:none;
+    justify-content:center;
+    width:100%;
+    min-height:220px;
+    overflow-x:auto;
+}
+.feed-panel.active{display:flex;animation:fadeUp .5s ease;}
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(10px);}
+    to{opacity:1;transform:none;}
+}
+.feed-panel .tiktok-embed{margin:0 auto !important;}
+
+.ig-grid{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:16px;
+}
+.fb-frame{max-width:100%;border-radius:16px;}
+
+.feed-promo{
+    align-self:center;
+    width:100%;
+    max-width:420px;
+    text-align:center;
+    padding:34px 26px;
+    border-radius:var(--radius);
+    background:linear-gradient(180deg,#fbfcff,#f3f6fd);
+    border:1px solid var(--line);
+}
+.feed-promo .promo-icon{
+    width:70px;height:70px;
+    margin:0 auto 14px;
+    border-radius:20px;
+    display:grid;place-items:center;
+    color:white;
+    font-size:1.8rem;
+    box-shadow:0 10px 22px rgba(0,0,0,.15);
+}
+.feed-promo.instagram .promo-icon{background:linear-gradient(45deg,#f9a825,#e1306c,#833ab4);}
+.feed-promo.facebook .promo-icon{background:#1877f2;}
+.feed-promo h4{
+    font-family:var(--f-title);
+    font-size:1.3rem;
+    color:var(--navy-800);
+}
+.feed-promo .user{
+    font-family:var(--f-label);
+    font-size:.8rem;
+    font-weight:700;
+    color:var(--orange);
+}
+.feed-promo p{
+    color:var(--muted);
+    font-size:.92rem;
+    margin:10px 0 18px;
+}
+.feed-promo .btn{margin-top:0;}
+
+@media (max-width:400px){
+    .feed-tab span{display:none;}
+    .feed-tab i{font-size:1.1rem;}
+}
+
+/* =====================================================
    FOOTER
 ===================================================== */
 footer{
@@ -1056,12 +1219,8 @@ footer h4::after{
 }
 
 @media (max-width:768px){
-    .hero{
-        background:var(--primary);
-        padding:15px 0 70px;
-    }
-    .hero::before,
-    .hero::after,
+    .hero{padding:15px 0 70px;}
+    .hero-bg{left:0;right:0;border-radius:0;}
     .hero .corner-cut{display:none;}
 
     .top-bar{
@@ -1190,6 +1349,17 @@ footer h4::after{
 
 <!-- ================= HEADER ================= -->
 <header class="hero" id="inicio">
+    <div class="hero-bg" aria-hidden="true">
+        <span class="hero-glow g1"></span>
+        <span class="hero-glow g2"></span>
+        <span class="hero-glow g3"></span>
+        <span class="spark s1"></span>
+        <span class="spark s2"></span>
+        <span class="spark s3"></span>
+        <span class="spark s4"></span>
+        <span class="spark s5"></span>
+    </div>
+
     <div class="corner-cut"></div>
     <div class="bottom-pill"></div>
 
@@ -1365,6 +1535,37 @@ footer h4::after{
                 <a class="map-l" href="https://www.google.com/maps/search/?api=1&query=Cra.+5J+%2348-61+Bogota+Colombia" target="_blank" rel="noopener" aria-label="Ubicación">
                     <i class="fa-solid fa-location-dot"></i><span>Ubicación</span>
                 </a>
+            </div>
+
+            <!-- Últimas publicaciones -->
+            <div class="feed reveal d2" id="feed">
+                <h3 class="feed-title">Últimas publicaciones</h3>
+
+                <div class="feed-tabs" role="tablist">
+                    <button class="feed-tab tt active" data-tab="tiktok" role="tab">
+                        <i class="fab fa-tiktok"></i><span>TikTok</span>
+                    </button>
+                    <button class="feed-tab ig" data-tab="instagram" role="tab">
+                        <i class="fab fa-instagram"></i><span>Instagram</span>
+                    </button>
+                    <button class="feed-tab fb" data-tab="facebook" role="tab">
+                        <i class="fab fa-facebook-f"></i><span>Facebook</span>
+                    </button>
+                </div>
+
+                <div class="feed-panel active" id="panel-tiktok">
+                    <blockquote class="tiktok-embed"
+                        cite="https://www.tiktok.com/@ipuc_bochica"
+                        data-unique-id="ipuc_bochica"
+                        data-embed-type="creator"
+                        style="max-width:780px;min-width:288px;">
+                        <section>
+                            <a target="_blank" rel="noopener" href="https://www.tiktok.com/@ipuc_bochica?refer=creator_embed">@ipuc_bochica</a>
+                        </section>
+                    </blockquote>
+                </div>
+                <div class="feed-panel" id="panel-instagram"></div>
+                <div class="feed-panel" id="panel-facebook"></div>
             </div>
         </div>
     </section>
@@ -1602,6 +1803,105 @@ footer h4::after{
         navLinks.classList.remove('open');
         navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
     }));
+
+    /* ---------- ÚLTIMAS PUBLICACIONES ---------- */
+    const FEED = {
+        // Dirección de la PÁGINA de Facebook (no el link de "compartir").
+        // Ej: 'https://www.facebook.com/IPUCBochicaSur'
+        facebookPage: '',
+
+        // Instagram no permite mostrar las últimas publicaciones automáticamente.
+        // Pega aquí los enlaces de las publicaciones que quieras mostrar.
+        // Ej: 'https://www.instagram.com/p/ABC123xyz/'
+        instagramPosts: []
+    };
+
+    const PROMO = {
+        instagram:{
+            icon:'fab fa-instagram', name:'Instagram', user:'@ipucbochicadecom',
+            url:'https://www.instagram.com/ipucbochicadecom/',
+            text:'Fotos, reels y los momentos especiales de nuestra iglesia.'
+        },
+        facebook:{
+            icon:'fab fa-facebook-f', name:'Facebook', user:'IPUC Bochica Sur',
+            url:'https://www.facebook.com/share/1DphkF5di3/',
+            text:'Anuncios, transmisiones y novedades de la congregación.'
+        }
+    };
+
+    function promo(type){
+        const p = PROMO[type];
+        return `<div class="feed-promo ${type}">
+            <div class="promo-icon"><i class="${p.icon}"></i></div>
+            <h4>Míranos en ${p.name}</h4>
+            <span class="user">${p.user}</span>
+            <p>${p.text}</p>
+            <a class="btn" href="${p.url}" target="_blank" rel="noopener">
+                <i class="${p.icon}"></i> Ver publicaciones
+            </a>
+        </div>`;
+    }
+
+    function loadScript(src, cb){
+        const s = document.createElement('script');
+        s.src = src; s.async = true;
+        if(cb) s.onload = cb;
+        document.body.appendChild(s);
+    }
+
+    const feedLoaded = {};
+    function loadTab(name){
+        if(feedLoaded[name]) return;
+        feedLoaded[name] = true;
+        const panel = document.getElementById('panel-' + name);
+
+        if(name === 'tiktok'){
+            loadScript('https://www.tiktok.com/embed.js');
+        }
+
+        if(name === 'instagram'){
+            if(FEED.instagramPosts.length){
+                panel.innerHTML = '<div class="ig-grid">' + FEED.instagramPosts.map(u =>
+                    `<blockquote class="instagram-media" data-instgrm-permalink="${u}" data-instgrm-version="14"
+                        style="margin:0 auto;max-width:400px;width:100%;"></blockquote>`
+                ).join('') + '</div>';
+                loadScript('https://www.instagram.com/embed.js', ()=>{
+                    if(window.instgrm) window.instgrm.Embeds.process();
+                });
+            }else{
+                panel.innerHTML = promo('instagram');
+            }
+        }
+
+        if(name === 'facebook'){
+            if(FEED.facebookPage){
+                const w = Math.min(500, Math.max(180, panel.clientWidth));
+                const src = 'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(FEED.facebookPage) +
+                    `&tabs=timeline&width=${w}&height=650&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false`;
+                panel.innerHTML = `<iframe class="fb-frame" src="${src}" width="${w}" height="650"
+                    style="border:none;overflow:hidden" scrolling="no" frameborder="0" loading="lazy"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    title="Publicaciones de Facebook"></iframe>`;
+            }else{
+                panel.innerHTML = promo('facebook');
+            }
+        }
+    }
+
+    document.querySelectorAll('.feed-tab').forEach(tab=>{
+        tab.addEventListener('click', ()=>{
+            const name = tab.dataset.tab;
+            document.querySelectorAll('.feed-tab').forEach(t=>t.classList.toggle('active', t===tab));
+            document.querySelectorAll('.feed-panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+name));
+            loadTab(name);
+        });
+    });
+
+    // TikTok se carga cuando la sección aparece en pantalla
+    const feedIO = new IntersectionObserver(entries=>{
+        if(entries[0].isIntersecting){ loadTab('tiktok'); feedIO.disconnect(); }
+    }, {rootMargin:'300px'});
+    feedIO.observe(document.getElementById('feed'));
 
     /* ---------- REVELAR AL HACER SCROLL ---------- */
     const io = new IntersectionObserver(entries=>{
