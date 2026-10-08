@@ -289,6 +289,105 @@ body.loading .site{opacity:0;transform:scale(.98);filter:blur(6px);}
     color:var(--muted);
 }
 .side-rail.left .rail-text{transform:rotate(180deg);}
+.side-rail a{
+    pointer-events:auto;
+    width:34px;height:34px;
+    border-radius:50%;
+    display:grid;place-items:center;
+    font-size:.85rem;
+    text-decoration:none;
+    color:var(--navy-700);
+    background:white;
+    border:1px solid var(--line);
+    box-shadow:var(--shadow-sm);
+    transition:.25s;
+}
+.side-rail a:hover{background:var(--orange);color:white;border-color:var(--orange);transform:scale(1.1);}
+
+/* =====================================================
+   MENÚ SUPERIOR
+===================================================== */
+.nav{
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:12px clamp(16px,5vw,70px);
+    background:rgba(255,255,255,.85);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+    transition:box-shadow .3s;
+}
+.nav.scrolled{box-shadow:0 8px 25px rgba(6,20,54,.08);}
+
+.nav-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+}
+.nav-brand img{height:38px;width:auto;}
+.nav-brand span{
+    font-family:var(--f-title);
+    font-weight:700;
+    font-size:1.1rem;
+    color:var(--navy-700);
+}
+.nav-brand small{
+    display:block;
+    font-family:var(--f-label);
+    font-size:.6rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--orange);
+    font-weight:600;
+}
+
+.nav-links{
+    display:flex;
+    gap:6px;
+    list-style:none;
+}
+.nav-links a{
+    position:relative;
+    display:block;
+    padding:8px 14px;
+    font-family:var(--f-label);
+    font-size:.82rem;
+    font-weight:600;
+    letter-spacing:.4px;
+    text-decoration:none;
+    color:var(--navy-800);
+    border-radius:30px;
+    transition:.25s;
+}
+.nav-links a::after{
+    content:"";
+    position:absolute;
+    left:50%;bottom:3px;
+    width:0;height:2px;
+    background:var(--orange);
+    border-radius:2px;
+    transform:translateX(-50%);
+    transition:width .25s;
+}
+.nav-links a:hover::after{width:40%;}
+.nav-links a:hover{color:var(--orange);}
+
+.nav-toggle{
+    display:none;
+    width:42px;height:42px;
+    border:none;
+    border-radius:12px;
+    background:var(--navy-700);
+    color:white;
+    font-size:1.1rem;
+    cursor:pointer;
+}
 
 /* =====================================================
    HEADER (diseño original)
@@ -796,8 +895,6 @@ main{
 footer{
     position:relative;
     margin-top:100px;
-    padding:50px 20px 24px;
-    text-align:center;
     color:#c7d3f5;
     background:linear-gradient(180deg,var(--navy-800),var(--navy-900));
 }
@@ -808,12 +905,19 @@ footer{
 }
 .footer-wave svg{width:100%;height:80px;display:block;}
 
+.footer-grid{
+    width:min(1100px,92%);
+    margin:0 auto;
+    padding:60px 0 40px;
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr;
+    gap:40px;
+}
 .footer-brand{
     display:flex;
     align-items:center;
-    justify-content:center;
     gap:12px;
-    margin-bottom:12px;
+    margin-bottom:14px;
 }
 .footer-brand img{
     height:52px;width:auto;
@@ -826,23 +930,65 @@ footer{
     color:white;
     font-size:1.35rem;
 }
-.footer-text{
-    max-width:520px;
-    margin:0 auto;
-    font-size:.92rem;
+footer p{font-size:.92rem;line-height:1.8;}
+footer h4{
+    font-family:var(--f-label);
+    color:white;
+    font-size:.82rem;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    margin-bottom:16px;
+    position:relative;
+    padding-bottom:10px;
+}
+footer h4::after{
+    content:"";
+    position:absolute;
+    left:0;bottom:0;
+    width:30px;height:2px;
+    background:var(--orange);
+    border-radius:2px;
+}
+.footer-list{list-style:none;}
+.footer-list li{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:7px 0;
+    border-bottom:1px dashed rgba(255,255,255,.1);
+    font-size:.9rem;
+}
+.footer-list li span:last-child{color:var(--gold);font-weight:500;}
+.footer-contact li{justify-content:flex-start;}
+.footer-contact li span:last-child{color:inherit;font-weight:400;}
+.footer-contact i{color:var(--orange);width:18px;margin-top:5px;}
+
+.footer-social{display:flex;gap:10px;margin-top:18px;}
+.footer-social a{
+    width:38px;height:38px;
+    border-radius:50%;
+    display:grid;place-items:center;
+    text-decoration:none;
+    background:rgba(255,255,255,.08);
+    color:white;
+    font-size:.9rem;
+    transition:.25s;
+}
+.footer-social a:hover{background:var(--orange);transform:translateY(-3px);}
+
+.footer-bottom{
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:20px;
+    text-align:center;
+    font-size:.82rem;
+    color:#8fa0cc;
 }
 .footer-script{
     display:block;
-    margin:22px 0 18px;
+    margin-bottom:4px;
     font-family:var(--f-script);
-    font-size:1.8rem;
+    font-size:1.5rem;
     color:var(--gold);
-}
-.footer-bottom{
-    border-top:1px solid rgba(255,255,255,.08);
-    padding-top:20px;
-    font-size:.82rem;
-    color:#8fa0cc;
 }
 
 /* Botón volver arriba */
@@ -886,7 +1032,27 @@ footer{
 }
 
 @media (max-width:860px){
+    .nav-toggle{display:grid;place-items:center;}
+    .nav-links{
+        position:absolute;
+        top:100%;left:0;right:0;
+        flex-direction:column;
+        gap:0;
+        padding:10px 16px 16px;
+        background:white;
+        border-bottom:1px solid var(--line);
+        box-shadow:0 15px 30px rgba(6,20,54,.1);
+        transform:translateY(-10px);
+        opacity:0;
+        pointer-events:none;
+        transition:.25s;
+    }
+    .nav-links.open{transform:none;opacity:1;pointer-events:auto;}
+    .nav-links a{padding:12px 10px;border-radius:10px;}
+    .nav-links a:hover{background:var(--bg);}
+
     .location{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:30px;}
 }
 
 @media (max-width:768px){
@@ -940,6 +1106,7 @@ footer{
 
 @media (max-width:600px){
     .corner{display:none;}
+    .nav-brand small{display:none;}
     .verse{padding:28px 20px 22px;}
     .intro-card{padding:36px 22px 30px;}
 }
@@ -990,16 +1157,39 @@ footer{
     <div class="rail-line"></div>
 </aside>
 
-<aside class="side-rail right" aria-hidden="true">
+<aside class="side-rail right">
     <div class="rail-line"></div>
-    <span class="rail-dot"></span>
-    <span class="rail-text">Bochica Sur · Bogotá</span>
-    <span class="rail-dot"></span>
+    <a href="https://www.facebook.com/share/1DphkF5di3/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.instagram.com/ipucbochicadecom/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.tiktok.com/@ipuc_bochica" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
     <div class="rail-line"></div>
 </aside>
 
+<!-- ================= MENÚ ================= -->
+<nav class="nav" id="nav">
+    <a href="#inicio" class="nav-brand">
+        <img src="logo1.png" alt="IPUC" onerror="this.style.display='none'">
+        <div>
+            <span>Bochica Sur</span>
+            <small>IPUC</small>
+        </div>
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#bienvenida">Nosotros</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a href="#redes">Redes</a></li>
+    </ul>
+</nav>
+
 <!-- ================= HEADER ================= -->
-<header class="hero">
+<header class="hero" id="inicio">
     <div class="corner-cut"></div>
     <div class="bottom-pill"></div>
 
@@ -1028,7 +1218,7 @@ footer{
         <span class="corner br"></span>
 
         <!-- Bienvenida -->
-        <div class="welcome reveal">
+        <div class="welcome reveal" id="bienvenida">
             <span class="eyebrow">Bienvenidos</span>
             <h2 class="title">Una iglesia para toda la familia</h2>
             <div class="title-deco"><i class="fa-solid fa-dove"></i></div>
@@ -1047,7 +1237,7 @@ footer{
         </div>
 
         <!-- Servicios -->
-        <div class="section">
+        <div class="section" id="servicios">
             <div class="reveal">
                 <span class="eyebrow">Te esperamos</span>
                 <h2 class="title">Nuestros Servicios</h2>
@@ -1104,7 +1294,7 @@ footer{
         </div>
 
         <!-- Ubicación -->
-        <div class="section">
+        <div class="section" id="ubicacion">
             <div class="reveal">
                 <span class="eyebrow">Visítanos</span>
                 <h2 class="title">¿Dónde estamos?</h2>
@@ -1127,6 +1317,13 @@ footer{
                             <p>Bochica Sur · Bogotá</p>
                         </div>
                     </div>
+                    <div class="loc-row">
+                        <i class="fa-solid fa-church"></i>
+                        <div>
+                            <h4>Servicio principal</h4>
+                            <p>Domingos · 10:00 AM</p>
+                        </div>
+                    </div>
                     <a class="btn"
                        href="https://www.google.com/maps/search/?api=1&query=Cra.+5J+%2348-61+Bogota+Colombia"
                        target="_blank" rel="noopener">
@@ -1145,7 +1342,7 @@ footer{
         </div>
 
         <!-- Redes -->
-        <div class="section">
+        <div class="section" id="redes">
             <div class="reveal">
                 <span class="eyebrow">Conéctate</span>
                 <h2 class="title">Síguenos en redes</h2>
@@ -1181,17 +1378,44 @@ footer{
         </svg>
     </div>
 
-    <div class="footer-brand">
-        <img src="logo1.png" alt="IPUC" onerror="this.style.display='none'">
-        <h3>IPUC Bochica Sur</h3>
-    </div>
-    <p class="footer-text">
-        Una comunidad que busca a Dios, ama su Palabra y sirve con alegría.
-    </p>
+    <div class="footer-grid">
+        <div>
+            <div class="footer-brand">
+                <img src="logo1.png" alt="IPUC" onerror="this.style.display='none'">
+                <h3>IPUC Bochica Sur</h3>
+            </div>
+            <p>Iglesia Pentecostal Unida de Colombia. Una comunidad que busca a Dios,
+               ama su Palabra y sirve con alegría.</p>
+            <div class="footer-social">
+                <a href="https://www.facebook.com/share/1DphkF5di3/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/ipucbochicadecom/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@ipuc_bochica" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://ipuc.org.co/" target="_blank" rel="noopener" aria-label="IPUC"><i class="fa-solid fa-globe"></i></a>
+            </div>
+        </div>
 
-    <span class="footer-script">Dios te bendiga</span>
+        <div>
+            <h4>Horarios</h4>
+            <ul class="footer-list">
+                <li><span>Dorcas · Martes</span><span>7:00 PM</span></li>
+                <li><span>Oración · Jueves</span><span>7:00 PM</span></li>
+                <li><span>Jóvenes · Sábados</span><span>7:00 PM</span></li>
+                <li><span>Esc. Dominical</span><span>10:00 AM</span></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4>Visítanos</h4>
+            <ul class="footer-list footer-contact">
+                <li><i class="fa-solid fa-location-dot"></i><span>Carrera 5J No. 48L-61 Sur</span></li>
+                <li><i class="fa-solid fa-house"></i><span>Barrio Bochica Sur, Bogotá</span></li>
+                <li><i class="fa-solid fa-globe"></i><span>ipuc.org.co</span></li>
+            </ul>
+        </div>
+    </div>
 
     <div class="footer-bottom">
+        <span class="footer-script">Dios te bendiga</span>
         © <span id="year">2026</span> IPUC Bochica Sur · Donde Dios se glorifica
     </div>
 </footer>
@@ -1363,7 +1587,8 @@ footer{
         setTimeout(enter, 5400);
     }
 
-    /* ---------- SCROLL ---------- */
+    /* ---------- MENÚ / SCROLL ---------- */
+    const nav = document.getElementById('nav');
     const progress = document.getElementById('progress');
     const toTop = document.getElementById('toTop');
 
@@ -1371,10 +1596,22 @@ footer{
         const y = window.scrollY;
         const max = document.documentElement.scrollHeight - window.innerHeight;
         progress.style.width = (max > 0 ? (y/max)*100 : 0) + '%';
+        nav.classList.toggle('scrolled', y > 10);
         toTop.classList.toggle('show', y > 500);
     }, {passive:true});
 
     toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+    const navLinks = document.getElementById('navLinks');
+    const navToggle = document.getElementById('navToggle');
+    navToggle.addEventListener('click', ()=>{
+        const open = navLinks.classList.toggle('open');
+        navToggle.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+    });
+    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{
+        navLinks.classList.remove('open');
+        navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    }));
 
     /* ---------- REVELAR AL HACER SCROLL ---------- */
     const io = new IntersectionObserver(entries=>{
