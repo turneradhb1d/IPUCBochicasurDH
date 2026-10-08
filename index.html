@@ -999,6 +999,28 @@ main{
 }
 .fb-frame{max-width:100%;border-radius:16px;}
 .ig-frame{width:100%;max-width:900px;border:0;border-radius:16px;}
+
+/* Carrusel de videos de TikTok */
+.tt-grid{
+    width:100%;
+    display:grid;
+    grid-auto-flow:column;
+    grid-auto-columns:minmax(230px,280px);
+    justify-content:safe center;
+    gap:16px;
+    overflow-x:auto;
+    padding:4px 4px 14px;
+    scroll-snap-type:x mandatory;
+}
+.tt-grid iframe{
+    width:100%;
+    aspect-ratio:9/16;
+    border:0;
+    border-radius:18px;
+    background:#111;
+    box-shadow:var(--shadow-sm);
+    scroll-snap-align:center;
+}
 .feed-tab[hidden],
 .feed-tabs[hidden]{display:none !important;}
 
@@ -1759,6 +1781,22 @@ footer h4::after{
     /* ===== CONFIGURACIÓN DE REDES =====
        Una pestaña solo aparece si tiene publicaciones para mostrar.  */
     const FEED = {
+        // TIKTOK: pega aquí los links de los videos que quieres mostrar
+        // (en TikTok: Compartir → Copiar enlace). Se muestran en un carrusel.
+        // Ej: 'https://www.tiktok.com/@ipuc_bochica/video/7412345678901234567'
+        tiktokVideos: [
+            'https://www.tiktok.com/@ipuc_bochica/video/7684630701370543376',
+            'https://www.tiktok.com/@ipuc_bochica/video/7611182335676960020',
+            'https://www.tiktok.com/@ipuc_bochica/video/7602275117447564565'
+        ],
+
+        // FACEBOOK (videos y reels): links de los videos que quieres mostrar.
+        facebookVideos: [
+            'https://www.facebook.com/share/v/1KcGMsWRr3/',
+            'https://www.facebook.com/share/r/1DRjjP5451/',
+            'https://www.facebook.com/share/r/1Nd4wXkpT6/'
+        ],
+
         // FACEBOOK (automático): dirección de la PÁGINA, no el link de "compartir".
         // Ej: 'https://www.facebook.com/IPUCBochicaSur'
         facebookPage: '',
@@ -1774,7 +1812,7 @@ footer h4::after{
     };
 
     const hasInstagram = !!FEED.instagramWidget || FEED.instagramPosts.length > 0;
-    const hasFacebook  = !!FEED.facebookPage;
+    const hasFacebook  = !!FEED.facebookPage || FEED.facebookVideos.length > 0;
 
     function loadScript(src, cb){
         const s = document.createElement('script');
@@ -1790,7 +1828,21 @@ footer h4::after{
         const panel = document.getElementById('panel-' + name);
 
         if(name === 'tiktok'){
-            loadScript('https://www.tiktok.com/embed.js');
+            const ids = FEED.tiktokVideos
+                .map(u => (String(u).match(/video\/(\d+)/) || [])[1])
+                .filter(Boolean);
+
+            if(ids.length){
+                // Reproductor oficial de TikTok (más estable que el widget de perfil)
+                panel.innerHTML = '<div class="tt-grid">' + ids.map(id =>
+                    `<iframe src="https://www.tiktok.com/player/v1/${id}?description=1&music_info=0&rel=0"
+                        loading="lazy" allow="fullscreen; encrypted-media; picture-in-picture"
+                        title="Video de TikTok"></iframe>`
+                ).join('') + '</div>';
+            }else{
+                // Sin videos en la lista: se intenta el widget de perfil
+                loadScript('https://www.tiktok.com/embed.js');
+            }
         }
 
         if(name === 'instagram'){
@@ -1809,7 +1861,15 @@ footer h4::after{
             }
         }
 
-        if(name === 'facebook'){
+        if(name === 'facebook' && FEED.facebookVideos.length){
+            // Videos y reels de Facebook en carrusel
+            panel.innerHTML = '<div class="tt-grid">' + FEED.facebookVideos.map(u =>
+                `<iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(u)}&show_text=false&width=280"
+                    loading="lazy" scrolling="no" allowfullscreen="true"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    title="Video de Facebook"></iframe>`
+            ).join('') + '</div>';
+        }else if(name === 'facebook'){
             const w = Math.min(500, Math.max(180, panel.clientWidth));
             const src = 'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(FEED.facebookPage) +
                 `&tabs=timeline&width=${w}&height=650&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false`;
