@@ -978,7 +978,7 @@ footer h4::after{
 
 .footer-bottom{
     border-top:1px solid rgba(255,255,255,.08);
-    padding:20px;
+    padding:20px 20px 90px;
     text-align:center;
     font-size:.82rem;
     color:#8fa0cc;
@@ -1434,21 +1434,12 @@ footer h4::after{
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    /* ---------- ¿Ya vio la bienvenida en esta visita? ---------- */
-    let yaVisto = false;
-    try{ yaVisto = sessionStorage.getItem('bienvenidaVista') === '1'; }catch(e){}
-
     function mostrarPagina(){
         body.classList.remove('loading');
         setTimeout(()=>body.classList.add('ready'), 350);
     }
 
-    if(yaVisto){
-        intro.remove();
-        mostrarPagina();
-    }else{
-        iniciarBienvenida();
-    }
+    iniciarBienvenida();
 
     function iniciarBienvenida(){
         const canvas = document.getElementById('confetti');
@@ -1578,7 +1569,6 @@ footer h4::after{
         function enter(){
             if(closed) return;
             closed = true;
-            try{ sessionStorage.setItem('bienvenidaVista','1'); }catch(e){}
             intro.classList.add('hide');
             mostrarPagina();
             setTimeout(()=>{ running = false; intro.remove(); }, 1500);
