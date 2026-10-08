@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b2a6b">
+<meta name="theme-color" content="#0b3d91">
 <meta name="description" content="IPUC Bochica Sur · Iglesia Pentecostal Unida de Colombia. Horarios de servicios, dirección y redes sociales.">
 
 <title>IPUC Bochica Sur</title>
@@ -18,10 +18,10 @@
    VARIABLES
 ===================================================== */
 :root{
+    --primary:#0b3d91;
     --navy-900:#061436;
     --navy-800:#0a1f52;
     --navy-700:#0b2a6b;
-    --navy-600:#123a8c;
     --navy-500:#1d4fb3;
     --orange:#ff7b00;
     --orange-soft:#ff9a3c;
@@ -30,7 +30,6 @@
     --bg:#f4f6fb;
     --text:#1b2540;
     --muted:#5b6785;
-    --card:#ffffff;
     --line:#e3e9f5;
 
     --f-title:'Playfair Display',serif;
@@ -66,9 +65,6 @@ body::before{
     z-index:-1;
 }
 
-img{max-width:100%;display:block;}
-a{color:inherit;}
-
 /* Página oculta mientras está la bienvenida */
 body.loading{overflow:hidden;}
 body.loading .site{opacity:0;transform:scale(.98);filter:blur(6px);}
@@ -88,7 +84,7 @@ body.loading .site{opacity:0;transform:scale(.98);filter:blur(6px);}
     background:
         radial-gradient(circle at 20% 20%, rgba(255,123,0,.25), transparent 45%),
         radial-gradient(circle at 80% 80%, rgba(246,194,91,.18), transparent 45%),
-        linear-gradient(160deg, var(--navy-900), var(--navy-700) 60%, var(--navy-600));
+        linear-gradient(160deg, var(--navy-900), var(--navy-700) 60%, var(--primary));
     overflow:hidden;
     clip-path:circle(150% at 50% 50%);
     transition:clip-path 1.1s cubic-bezier(.77,0,.18,1), opacity .6s ease .7s;
@@ -107,7 +103,6 @@ body.loading .site{opacity:0;transform:scale(.98);filter:blur(6px);}
     pointer-events:none;
 }
 
-/* Rayos de luz girando */
 .intro-rays{
     position:absolute;
     width:160vmax;
@@ -171,7 +166,6 @@ body.loading .site{opacity:0;transform:scale(.98);filter:blur(6px);}
     background:white;
     display:grid;
     place-items:center;
-    box-shadow:0 0 0 6px rgba(255,255,255,.12), 0 0 0 14px rgba(255,123,0,.15);
     animation:pulse 2.4s ease-in-out infinite;
 }
 .intro-logo img{width:78%;height:auto;}
@@ -224,7 +218,6 @@ body.loading .site{opacity:0;transform:scale(.98);filter:blur(6px);}
     font-family:var(--f-label);
     font-weight:700;
     font-size:.95rem;
-    letter-spacing:.5px;
     color:white;
     background:linear-gradient(135deg,var(--orange),var(--orange-soft));
     box-shadow:0 10px 25px rgba(255,123,0,.45);
@@ -273,338 +266,194 @@ body.loading .site{opacity:0;transform:scale(.98);filter:blur(6px);}
     flex-direction:column;
     align-items:center;
     gap:16px;
+    pointer-events:none;
 }
 .side-rail.left{left:22px;}
 .side-rail.right{right:22px;}
-
 .side-rail .rail-line{
     width:1px;
     height:80px;
     background:linear-gradient(to bottom, transparent, rgba(11,42,107,.35), transparent);
 }
+.side-rail .rail-dot{
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--orange);
+}
 .side-rail .rail-text{
     writing-mode:vertical-rl;
-    transform:rotate(180deg);
     font-family:var(--f-label);
     font-size:.68rem;
     letter-spacing:5px;
     text-transform:uppercase;
     color:var(--muted);
 }
-.side-rail.right .rail-text{transform:none;}
-
-.side-rail a{
-    width:34px;height:34px;
-    border-radius:50%;
-    display:grid;place-items:center;
-    font-size:.85rem;
-    text-decoration:none;
-    color:var(--navy-700);
-    background:white;
-    border:1px solid var(--line);
-    box-shadow:var(--shadow-sm);
-    transition:.25s;
-}
-.side-rail a:hover{background:var(--orange);color:white;border-color:var(--orange);transform:scale(1.1);}
+.side-rail.left .rail-text{transform:rotate(180deg);}
 
 /* =====================================================
-   NAV
-===================================================== */
-.nav{
-    position:sticky;
-    top:0;
-    z-index:100;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:16px;
-    padding:12px clamp(16px,5vw,70px);
-    background:rgba(255,255,255,.85);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--line);
-    transition:box-shadow .3s;
-}
-.nav.scrolled{box-shadow:0 8px 25px rgba(6,20,54,.08);}
-
-.nav-brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    text-decoration:none;
-}
-.nav-brand img{height:38px;width:auto;}
-.nav-brand span{
-    font-family:var(--f-title);
-    font-weight:700;
-    font-size:1.1rem;
-    color:var(--navy-700);
-}
-.nav-brand small{
-    display:block;
-    font-family:var(--f-label);
-    font-size:.6rem;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--orange);
-    font-weight:600;
-}
-
-.nav-links{
-    display:flex;
-    gap:6px;
-    list-style:none;
-}
-.nav-links a{
-    position:relative;
-    display:block;
-    padding:8px 14px;
-    font-family:var(--f-label);
-    font-size:.82rem;
-    font-weight:600;
-    letter-spacing:.4px;
-    text-decoration:none;
-    color:var(--navy-800);
-    border-radius:30px;
-    transition:.25s;
-}
-.nav-links a::after{
-    content:"";
-    position:absolute;
-    left:50%;bottom:3px;
-    width:0;height:2px;
-    background:var(--orange);
-    border-radius:2px;
-    transform:translateX(-50%);
-    transition:width .25s;
-}
-.nav-links a:hover::after{width:40%;}
-.nav-links a:hover{color:var(--orange);}
-
-.nav-toggle{
-    display:none;
-    width:42px;height:42px;
-    border:none;
-    border-radius:12px;
-    background:var(--navy-700);
-    color:white;
-    font-size:1.1rem;
-    cursor:pointer;
-}
-
-/* =====================================================
-   HERO
+   HEADER (diseño original)
 ===================================================== */
 .hero{
     position:relative;
     overflow:hidden;
-    color:white;
-    padding:80px 20px 150px;
-    text-align:center;
     background:
-        radial-gradient(circle at 15% 25%, rgba(255,123,0,.22), transparent 40%),
-        radial-gradient(circle at 85% 70%, rgba(246,194,91,.15), transparent 40%),
-        linear-gradient(160deg, var(--navy-900) 0%, var(--navy-700) 55%, var(--navy-600) 100%);
+        linear-gradient(90deg,
+            #ffffff 0%, #ffffff 18%,
+            var(--primary) 18%, var(--primary) 82%,
+            #ffffff 82%, #ffffff 100%);
+    padding:15px 0 25px;
+    border-bottom:4px solid var(--orange);
 }
 
-/* Patrón geométrico sutil */
+/* curva izquierda */
 .hero::before{
     content:"";
     position:absolute;
-    inset:0;
-    background-image:
-        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-    background-size:48px 48px;
-    -webkit-mask:radial-gradient(circle at 50% 40%, #000 20%, transparent 75%);
-            mask:radial-gradient(circle at 50% 40%, #000 20%, transparent 75%);
-}
-
-/* Orbes flotantes */
-.orb{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(2px);
-    opacity:.5;
-    animation:float 9s ease-in-out infinite;
-}
-.orb.o1{width:14px;height:14px;background:var(--gold);top:22%;left:12%;}
-.orb.o2{width:8px;height:8px;background:white;top:60%;left:20%;animation-delay:-3s;}
-.orb.o3{width:18px;height:18px;background:var(--orange);top:30%;right:14%;animation-delay:-5s;}
-.orb.o4{width:6px;height:6px;background:white;top:15%;right:30%;animation-delay:-2s;}
-.orb.o5{width:10px;height:10px;background:var(--gold);bottom:35%;right:22%;animation-delay:-6s;}
-@keyframes float{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-22px);}
-}
-
-/* Anillos decorativos */
-.ring{
-    position:absolute;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,.08);
-}
-.ring.r1{width:520px;height:520px;left:-200px;top:-180px;}
-.ring.r2{width:380px;height:380px;right:-140px;bottom:-60px;border-color:rgba(255,123,0,.15);}
-.ring.r3{width:260px;height:260px;right:-60px;bottom:20px;}
-
-.hero-inner{
-    position:relative;
-    z-index:2;
-    max-width:900px;
-    margin:0 auto;
-}
-
-.hero-logos{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:22px;
-    margin-bottom:26px;
-}
-.hero-logos .logo-badge{
-    background:white;
-    border-radius:20px;
-    padding:10px 14px;
-    box-shadow:0 12px 30px rgba(0,0,0,.25);
-}
-.hero-logos img{height:70px;width:auto;}
-.hero-logos .divider{
-    width:1px;height:50px;
-    background:rgba(255,255,255,.3);
-}
-
-.hero-kicker{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    font-family:var(--f-label);
-    font-size:.75rem;
-    font-weight:600;
-    letter-spacing:4px;
-    text-transform:uppercase;
-    color:var(--gold);
-    padding:7px 18px;
-    border:1px solid rgba(246,194,91,.35);
-    border-radius:50px;
-    background:rgba(246,194,91,.08);
-}
-.hero-kicker::before,
-.hero-kicker::after{
-    content:"";
-    width:5px;height:5px;
-    border-radius:50%;
-    background:var(--orange);
-}
-
-.hero h1{
-    font-family:var(--f-title);
-    font-weight:800;
-    font-size:clamp(2.6rem,7vw,5rem);
-    line-height:1.05;
-    margin:20px 0 14px;
-    text-shadow:0 6px 30px rgba(0,0,0,.35);
-}
-.hero h1 em{
-    font-style:italic;
-    font-weight:500;
-    color:var(--gold);
-}
-
-.hero-sub{
-    font-size:clamp(.95rem,2vw,1.12rem);
-    color:#d6e0ff;
-    max-width:620px;
-    margin:0 auto;
-}
-
-.hero-actions{
-    margin-top:32px;
-    display:flex;
-    gap:14px;
-    justify-content:center;
-    flex-wrap:wrap;
-}
-.btn{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding:13px 26px;
-    border-radius:50px;
-    font-family:var(--f-label);
-    font-size:.88rem;
-    font-weight:700;
-    text-decoration:none;
-    transition:.25s;
-}
-.btn-primary{
-    background:linear-gradient(135deg,var(--orange),var(--orange-soft));
-    color:white;
-    box-shadow:0 10px 25px rgba(255,123,0,.4);
-}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(255,123,0,.5);}
-.btn-ghost{
-    color:white;
-    border:1px solid rgba(255,255,255,.35);
-    background:rgba(255,255,255,.06);
-}
-.btn-ghost:hover{background:white;color:var(--navy-700);}
-
-.scroll-hint{
-    position:absolute;
-    left:50%;
-    bottom:95px;
+    left:18%;
+    top:0;
+    width:180px;
+    height:100%;
+    background:var(--primary);
+    border-bottom-left-radius:180px;
     transform:translateX(-50%);
-    z-index:2;
-    width:24px;height:38px;
-    border:2px solid rgba(255,255,255,.45);
-    border-radius:14px;
 }
-.scroll-hint::after{
+
+/* curva derecha */
+.hero::after{
     content:"";
     position:absolute;
-    left:50%;top:7px;
-    width:4px;height:8px;
-    border-radius:4px;
-    background:white;
-    transform:translateX(-50%);
-    animation:scrollDot 1.8s ease-in-out infinite;
-}
-@keyframes scrollDot{
-    0%{opacity:0;transform:translate(-50%,0);}
-    40%{opacity:1;}
-    100%{opacity:0;transform:translate(-50%,12px);}
+    right:18%;
+    top:0;
+    width:180px;
+    height:100%;
+    background:var(--primary);
+    border-bottom-right-radius:180px;
+    transform:translateX(50%);
 }
 
-/* Onda inferior */
-.wave{
+/* recorte blanco curvo superior izquierdo */
+.hero .corner-cut{
     position:absolute;
-    left:0;right:0;
-    bottom:-1px;
-    line-height:0;
+    top:0;
+    left:0;
+    width:110px;
+    height:118px;
+    background:white;
+    border-bottom-right-radius:140px;
     z-index:1;
 }
-.wave svg{width:100%;height:90px;display:block;}
+
+/* rectángulo blanco inferior derecho */
+.hero .bottom-pill{
+    position:absolute;
+    right:0;
+    bottom:0;
+    width:155px;
+    height:55px;
+    background:white;
+    border-top-left-radius:55px;
+    border-bottom-left-radius:55px;
+    z-index:1;
+}
+
+.hero-content{
+    width:100%;
+    position:relative;
+    z-index:2;
+}
+
+.top-bar{
+    position:relative;
+    min-height:150px;
+}
+
+.logo-left{
+    position:absolute;
+    left:0;
+    top:-15px;
+}
+.logo-left img{
+    height:115px;
+    width:auto;
+    object-fit:contain;
+}
+
+.logo-right-container{
+    position:absolute;
+    right:8px;
+    top:35px;
+}
+.logo-right-container img{
+    height:80px;
+    width:auto;
+    object-fit:contain;
+    display:block;
+}
+
+.center-brand{
+    text-align:center;
+    color:white;
+    padding-top:25px;
+}
+.center-brand h1{
+    font-family:var(--f-title);
+    font-size:clamp(2.5rem,4.5vw,4.2rem);
+    line-height:1;
+    font-weight:800;
+    margin-bottom:12px;
+    color:white;
+    text-shadow:0 4px 20px rgba(0,0,0,.35);
+}
+.center-brand h1 em{
+    font-style:italic;
+    font-weight:600;
+    color:var(--gold);
+}
+.center-brand p{
+    font-family:var(--f-label);
+    font-weight:600;
+    font-size:clamp(.55rem,1.3vw,.95rem);
+    color:#dbeafe;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    white-space:nowrap;
+    max-width:100%;
+}
+
+/* Entrada del header luego de la bienvenida */
+.center-brand,
+.logo-left img,
+.logo-right-container img{
+    opacity:0;
+    transform:translateY(-15px);
+}
+body.ready .center-brand,
+body.ready .logo-left img,
+body.ready .logo-right-container img{
+    animation:dropIn .9s cubic-bezier(.2,.8,.2,1) forwards;
+}
+body.ready .logo-left img{animation-delay:.1s;}
+body.ready .logo-right-container img{animation-delay:.25s;}
+@keyframes dropIn{to{opacity:1;transform:none;}}
 
 /* =====================================================
    CONTENEDOR PRINCIPAL
 ===================================================== */
 main{
     width:min(1100px,92%);
-    margin:-70px auto 0;
+    margin:-25px auto 0;
     position:relative;
     z-index:5;
 }
 
 .card{
-    background:var(--card);
+    background:white;
     border-radius:28px;
     padding:clamp(28px,5vw,56px);
     box-shadow:var(--shadow-lg);
     position:relative;
     overflow:hidden;
 }
-/* línea de acento superior */
 .card::before{
     content:"";
     position:absolute;
@@ -614,13 +463,10 @@ main{
     border-radius:0 0 6px 6px;
     background:linear-gradient(90deg,var(--orange),var(--gold));
 }
-/* esquinas decorativas */
 .corner{
     position:absolute;
     width:60px;height:60px;
-    border-color:rgba(11,42,107,.12);
-    border-style:solid;
-    border-width:0;
+    border:0 solid rgba(11,42,107,.12);
 }
 .corner.tl{top:18px;left:18px;border-top-width:2px;border-left-width:2px;border-top-left-radius:14px;}
 .corner.br{bottom:18px;right:18px;border-bottom-width:2px;border-right-width:2px;border-bottom-right-radius:14px;}
@@ -662,6 +508,8 @@ main{
 }
 .title-deco::after{transform:scaleX(-1);}
 
+.section{margin-top:70px;}
+
 /* =====================================================
    BIENVENIDA
 ===================================================== */
@@ -682,7 +530,7 @@ main{
     background:linear-gradient(135deg,var(--cream),#fff3e2);
     border:1px solid #ffe2bf;
 }
-.verse i.quote{
+.verse .quote{
     position:absolute;
     top:-18px;left:50%;
     transform:translateX(-50%);
@@ -712,45 +560,13 @@ main{
 }
 
 /* =====================================================
-   ESTADÍSTICAS / VALORES
-===================================================== */
-.values{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:16px;
-    margin:44px 0 10px;
-}
-.value{
-    text-align:center;
-    padding:18px 10px;
-    border-radius:16px;
-    border:1px dashed var(--line);
-}
-.value i{
-    font-size:1.3rem;
-    color:var(--navy-500);
-    margin-bottom:6px;
-}
-.value h4{
-    font-family:var(--f-label);
-    font-size:.85rem;
-    font-weight:700;
-    color:var(--navy-800);
-    letter-spacing:.5px;
-}
-.value p{font-size:.8rem;color:var(--muted);}
-
-/* =====================================================
    SERVICIOS
 ===================================================== */
-.section{margin-top:70px;}
-
 .services{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
     gap:22px;
 }
-
 .service{
     position:relative;
     padding:30px 24px 26px;
@@ -782,7 +598,7 @@ main{
     display:grid;place-items:center;
     font-size:1.4rem;
     color:white;
-    background:linear-gradient(135deg,var(--navy-700),var(--navy-500));
+    background:linear-gradient(135deg,var(--primary),var(--navy-500));
     box-shadow:0 10px 20px rgba(11,42,107,.25);
     margin-bottom:18px;
     transition:transform .35s;
@@ -791,7 +607,6 @@ main{
     transform:rotate(-8deg) scale(1.05);
     background:linear-gradient(135deg,var(--orange),var(--orange-soft));
 }
-
 .service h3{
     font-family:var(--f-title);
     font-size:1.3rem;
@@ -799,11 +614,7 @@ main{
     color:var(--navy-800);
     margin-bottom:12px;
 }
-.service-meta{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-}
+.service-meta{display:flex;flex-wrap:wrap;gap:8px;}
 .chip{
     display:inline-flex;
     align-items:center;
@@ -833,7 +644,7 @@ main{
 }
 
 /* =====================================================
-   BANNER VERSÍCULO
+   BANNER
 ===================================================== */
 .banner{
     margin-top:70px;
@@ -845,7 +656,7 @@ main{
     overflow:hidden;
     background:
         radial-gradient(circle at 10% 50%, rgba(255,123,0,.35), transparent 40%),
-        linear-gradient(135deg,var(--navy-800),var(--navy-600));
+        linear-gradient(135deg,var(--navy-800),var(--primary));
 }
 .banner::before{
     content:"\f004";
@@ -863,11 +674,7 @@ main{
     color:var(--gold);
     line-height:1.2;
 }
-.banner p{
-    margin-top:8px;
-    color:#d6e0ff;
-    font-size:1rem;
-}
+.banner p{margin-top:8px;color:#d6e0ff;}
 
 /* =====================================================
    UBICACIÓN
@@ -876,7 +683,6 @@ main{
     display:grid;
     grid-template-columns:1fr 1.2fr;
     gap:26px;
-    align-items:stretch;
 }
 .loc-info{
     padding:30px;
@@ -887,11 +693,7 @@ main{
     flex-direction:column;
     gap:18px;
 }
-.loc-row{
-    display:flex;
-    gap:14px;
-    align-items:flex-start;
-}
+.loc-row{display:flex;gap:14px;align-items:flex-start;}
 .loc-row i{
     flex:0 0 42px;
     height:42px;
@@ -908,11 +710,26 @@ main{
     color:var(--muted);
     font-weight:600;
 }
-.loc-row p{
-    font-weight:600;
-    color:var(--navy-800);
+.loc-row p{font-weight:600;color:var(--navy-800);}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 26px;
+    border-radius:50px;
+    font-family:var(--f-label);
+    font-size:.88rem;
+    font-weight:700;
+    text-decoration:none;
+    color:white;
+    background:linear-gradient(135deg,var(--orange),var(--orange-soft));
+    box-shadow:0 10px 25px rgba(255,123,0,.4);
+    transition:.25s;
+    align-self:flex-start;
+    margin-top:auto;
 }
-.loc-info .btn{align-self:flex-start;margin-top:auto;}
+.btn:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(255,123,0,.5);}
 
 .map{
     border-radius:var(--radius);
@@ -929,22 +746,25 @@ main{
 }
 
 /* =====================================================
-   REDES
+   REDES (una sola línea)
 ===================================================== */
 .social{
     display:flex;
+    flex-wrap:nowrap;
     justify-content:center;
-    flex-wrap:wrap;
-    gap:16px;
+    gap:clamp(8px,2.5vw,16px);
+    padding-bottom:26px;
 }
 .social a{
     position:relative;
-    width:60px;height:60px;
-    border-radius:18px;
+    flex:0 0 auto;
+    width:clamp(44px,12vw,60px);
+    height:clamp(44px,12vw,60px);
+    border-radius:clamp(14px,4vw,18px);
     display:grid;place-items:center;
     text-decoration:none;
-    font-size:1.3rem;
-    color:var(--navy-700);
+    font-size:clamp(1rem,3.5vw,1.3rem);
+    color:var(--primary);
     background:white;
     border:1px solid var(--line);
     box-shadow:var(--shadow-sm);
@@ -952,9 +772,9 @@ main{
 }
 .social a span{
     position:absolute;
-    bottom:-30px;
+    bottom:-26px;
     font-family:var(--f-label);
-    font-size:.68rem;
+    font-size:.66rem;
     font-weight:600;
     color:var(--muted);
     opacity:0;
@@ -967,7 +787,7 @@ main{
 .social a.fb:hover{background:#1877f2;}
 .social a.ig:hover{background:linear-gradient(45deg,#f9a825,#e1306c,#833ab4);}
 .social a.tt:hover{background:#111;}
-.social a.web:hover{background:var(--navy-700);}
+.social a.web:hover{background:var(--primary);}
 .social a.map-l:hover{background:var(--orange);}
 
 /* =====================================================
@@ -976,6 +796,8 @@ main{
 footer{
     position:relative;
     margin-top:100px;
+    padding:50px 20px 24px;
+    text-align:center;
     color:#c7d3f5;
     background:linear-gradient(180deg,var(--navy-800),var(--navy-900));
 }
@@ -986,19 +808,12 @@ footer{
 }
 .footer-wave svg{width:100%;height:80px;display:block;}
 
-.footer-grid{
-    width:min(1100px,92%);
-    margin:0 auto;
-    padding:60px 0 40px;
-    display:grid;
-    grid-template-columns:1.3fr 1fr 1fr;
-    gap:40px;
-}
 .footer-brand{
     display:flex;
     align-items:center;
+    justify-content:center;
     gap:12px;
-    margin-bottom:14px;
+    margin-bottom:12px;
 }
 .footer-brand img{
     height:52px;width:auto;
@@ -1011,65 +826,23 @@ footer{
     color:white;
     font-size:1.35rem;
 }
-footer p{font-size:.92rem;line-height:1.8;}
-footer h4{
-    font-family:var(--f-label);
-    color:white;
-    font-size:.82rem;
-    letter-spacing:2.5px;
-    text-transform:uppercase;
-    margin-bottom:16px;
-    position:relative;
-    padding-bottom:10px;
+.footer-text{
+    max-width:520px;
+    margin:0 auto;
+    font-size:.92rem;
 }
-footer h4::after{
-    content:"";
-    position:absolute;
-    left:0;bottom:0;
-    width:30px;height:2px;
-    background:var(--orange);
-    border-radius:2px;
+.footer-script{
+    display:block;
+    margin:22px 0 18px;
+    font-family:var(--f-script);
+    font-size:1.8rem;
+    color:var(--gold);
 }
-.footer-list{list-style:none;}
-.footer-list li{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    padding:7px 0;
-    border-bottom:1px dashed rgba(255,255,255,.1);
-    font-size:.9rem;
-}
-.footer-list li span:last-child{color:var(--gold);font-weight:500;}
-.footer-contact li{justify-content:flex-start;}
-.footer-contact i{color:var(--orange);width:18px;margin-top:5px;}
-
-.footer-social{display:flex;gap:10px;margin-top:18px;}
-.footer-social a{
-    width:38px;height:38px;
-    border-radius:50%;
-    display:grid;place-items:center;
-    text-decoration:none;
-    background:rgba(255,255,255,.08);
-    color:white;
-    font-size:.9rem;
-    transition:.25s;
-}
-.footer-social a:hover{background:var(--orange);transform:translateY(-3px);}
-
 .footer-bottom{
     border-top:1px solid rgba(255,255,255,.08);
-    padding:20px;
-    text-align:center;
+    padding-top:20px;
     font-size:.82rem;
     color:#8fa0cc;
-}
-.footer-bottom .heart{color:var(--orange);}
-.footer-script{
-    font-family:var(--f-script);
-    font-size:1.5rem;
-    color:var(--gold);
-    display:block;
-    margin-bottom:4px;
 }
 
 /* Botón volver arriba */
@@ -1105,20 +878,6 @@ footer h4::after{
 .reveal.d3{transition-delay:.3s;}
 .reveal.d4{transition-delay:.4s;}
 
-/* Entrada del hero luego de la bienvenida */
-.hero-inner > *{
-    opacity:0;
-    transform:translateY(25px);
-}
-body.ready .hero-inner > *{
-    animation:heroIn .9s cubic-bezier(.2,.8,.2,1) forwards;
-}
-body.ready .hero-inner > *:nth-child(2){animation-delay:.12s;}
-body.ready .hero-inner > *:nth-child(3){animation-delay:.24s;}
-body.ready .hero-inner > *:nth-child(4){animation-delay:.36s;}
-body.ready .hero-inner > *:nth-child(5){animation-delay:.48s;}
-@keyframes heroIn{to{opacity:1;transform:none;}}
-
 /* =====================================================
    RESPONSIVE
 ===================================================== */
@@ -1127,38 +886,60 @@ body.ready .hero-inner > *:nth-child(5){animation-delay:.48s;}
 }
 
 @media (max-width:860px){
-    .nav-toggle{display:grid;place-items:center;}
-    .nav-links{
-        position:absolute;
-        top:100%;left:0;right:0;
-        flex-direction:column;
-        gap:0;
-        padding:10px 16px 16px;
-        background:white;
-        border-bottom:1px solid var(--line);
-        box-shadow:0 15px 30px rgba(6,20,54,.1);
-        transform:translateY(-10px);
-        opacity:0;
-        pointer-events:none;
-        transition:.25s;
-    }
-    .nav-links.open{transform:none;opacity:1;pointer-events:auto;}
-    .nav-links a{padding:12px 10px;border-radius:10px;}
-    .nav-links a:hover{background:var(--bg);}
-
     .location{grid-template-columns:1fr;}
-    .footer-grid{grid-template-columns:1fr;gap:30px;}
+}
+
+@media (max-width:768px){
+    .hero{
+        background:var(--primary);
+        padding:15px 0 70px;
+    }
+    .hero::before,
+    .hero::after,
+    .hero .corner-cut{display:none;}
+
+    .top-bar{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        padding:10px 12px 0;
+        min-height:90px;
+    }
+    .logo-left{
+        position:static;
+        flex:0 0 70px;
+    }
+    .logo-left img{
+        height:65px;
+        width:auto;
+        display:block;
+    }
+    .logo-right-container{
+        position:absolute;
+        right:12px;
+        top:100%;
+        margin-top:15px;
+    }
+    .logo-right-container img{height:40px;}
+
+    .center-brand{
+        padding:0;
+        flex:1;
+    }
+    .center-brand h1{
+        font-size:1.8rem;
+        line-height:1.05;
+        margin-bottom:4px;
+    }
+    .center-brand p{
+        font-size:clamp(.55rem,2vw,.8rem);
+    }
+
+    main{margin-top:-15px;}
 }
 
 @media (max-width:600px){
-    .hero{padding:50px 16px 130px;}
-    .hero-logos img{height:52px;}
-    .hero-logos .logo-badge{padding:8px 10px;border-radius:16px;}
-    .hero-kicker{font-size:.62rem;letter-spacing:2.5px;padding:6px 12px;}
-    .scroll-hint{display:none;}
-    .values{grid-template-columns:1fr;}
     .corner{display:none;}
-    .nav-brand small{display:none;}
     .verse{padding:28px 20px 22px;}
     .intro-card{padding:36px 22px 30px;}
 }
@@ -1203,81 +984,40 @@ body.ready .hero-inner > *:nth-child(5){animation-delay:.48s;}
 <!-- ================= LATERALES ================= -->
 <aside class="side-rail left" aria-hidden="true">
     <div class="rail-line"></div>
+    <span class="rail-dot"></span>
     <span class="rail-text">Iglesia Pentecostal Unida de Colombia</span>
+    <span class="rail-dot"></span>
     <div class="rail-line"></div>
 </aside>
 
-<aside class="side-rail right">
+<aside class="side-rail right" aria-hidden="true">
     <div class="rail-line"></div>
-    <a href="https://www.facebook.com/share/1DphkF5di3/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-    <a href="https://www.instagram.com/ipucbochicadecom/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-    <a href="https://www.tiktok.com/@ipuc_bochica" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+    <span class="rail-dot"></span>
+    <span class="rail-text">Bochica Sur · Bogotá</span>
+    <span class="rail-dot"></span>
     <div class="rail-line"></div>
 </aside>
 
-<!-- ================= NAV ================= -->
-<nav class="nav" id="nav">
-    <a href="#inicio" class="nav-brand">
-        <img src="logo1.png" alt="IPUC" onerror="this.style.display='none'">
-        <div>
-            <span>Bochica Sur</span>
-            <small>IPUC</small>
+<!-- ================= HEADER ================= -->
+<header class="hero">
+    <div class="corner-cut"></div>
+    <div class="bottom-pill"></div>
+
+    <div class="hero-content">
+        <div class="top-bar">
+            <div class="logo-left">
+                <img src="logo1.png" alt="IPUC">
+            </div>
+
+            <div class="center-brand">
+                <h1>IPUC <em>Bochica Sur</em></h1>
+                <p>Iglesia Pentecostal Unida de Colombia</p>
+            </div>
+
+            <div class="logo-right-container">
+                <img src="logo2.png" alt="UNÁNIMES">
+            </div>
         </div>
-    </a>
-
-    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
-        <i class="fa-solid fa-bars"></i>
-    </button>
-
-    <ul class="nav-links" id="navLinks">
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#bienvenida">Nosotros</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#ubicacion">Ubicación</a></li>
-        <li><a href="#redes">Redes</a></li>
-    </ul>
-</nav>
-
-<!-- ================= HERO ================= -->
-<header class="hero" id="inicio">
-    <div class="ring r1"></div>
-    <div class="ring r2"></div>
-    <div class="ring r3"></div>
-    <span class="orb o1"></span>
-    <span class="orb o2"></span>
-    <span class="orb o3"></span>
-    <span class="orb o4"></span>
-    <span class="orb o5"></span>
-
-    <div class="hero-inner">
-        <div class="hero-logos">
-            <div class="logo-badge"><img src="logo1.png" alt="IPUC" onerror="this.parentElement.style.display='none'"></div>
-            <span class="divider"></span>
-            <div class="logo-badge"><img src="logo2.png" alt="UNÁNIMES" onerror="this.parentElement.style.display='none'"></div>
-        </div>
-
-        <span class="hero-kicker">Iglesia Pentecostal Unida de Colombia</span>
-
-        <h1>IPUC <em>Bochica Sur</em></h1>
-
-        <p class="hero-sub">
-            Una familia unida en la fe, creciendo en la Palabra y
-            sirviendo a Dios con todo el corazón.
-        </p>
-
-        <div class="hero-actions">
-            <a href="#servicios" class="btn btn-primary"><i class="fa-regular fa-calendar"></i> Ver horarios</a>
-            <a href="#ubicacion" class="btn btn-ghost"><i class="fa-solid fa-location-dot"></i> Cómo llegar</a>
-        </div>
-    </div>
-
-    <div class="scroll-hint" aria-hidden="true"></div>
-
-    <div class="wave" aria-hidden="true">
-        <svg viewBox="0 0 1440 90" preserveAspectRatio="none">
-            <path d="M0,40 C240,90 480,0 720,30 C960,60 1200,10 1440,45 L1440,90 L0,90 Z" fill="#ff7b00" opacity=".9"/>
-            <path d="M0,55 C260,95 500,15 740,45 C980,75 1220,25 1440,60 L1440,90 L0,90 Z" fill="#f4f6fb"/>
-        </svg>
     </div>
 </header>
 
@@ -1288,7 +1028,7 @@ body.ready .hero-inner > *:nth-child(5){animation-delay:.48s;}
         <span class="corner br"></span>
 
         <!-- Bienvenida -->
-        <div class="welcome reveal" id="bienvenida">
+        <div class="welcome reveal">
             <span class="eyebrow">Bienvenidos</span>
             <h2 class="title">Una iglesia para toda la familia</h2>
             <div class="title-deco"><i class="fa-solid fa-dove"></i></div>
@@ -1306,26 +1046,8 @@ body.ready .hero-inner > *:nth-child(5){animation-delay:.48s;}
             </blockquote>
         </div>
 
-        <div class="values">
-            <div class="value reveal d1">
-                <i class="fa-solid fa-book-bible"></i>
-                <h4>La Palabra</h4>
-                <p>Enseñanza bíblica fiel</p>
-            </div>
-            <div class="value reveal d2">
-                <i class="fa-solid fa-hands-praying"></i>
-                <h4>Oración</h4>
-                <p>Comunión con Dios</p>
-            </div>
-            <div class="value reveal d3">
-                <i class="fa-solid fa-house-chimney-user"></i>
-                <h4>Familia</h4>
-                <p>Crecemos juntos</p>
-            </div>
-        </div>
-
         <!-- Servicios -->
-        <div class="section" id="servicios">
+        <div class="section">
             <div class="reveal">
                 <span class="eyebrow">Te esperamos</span>
                 <h2 class="title">Nuestros Servicios</h2>
@@ -1382,7 +1104,7 @@ body.ready .hero-inner > *:nth-child(5){animation-delay:.48s;}
         </div>
 
         <!-- Ubicación -->
-        <div class="section" id="ubicacion">
+        <div class="section">
             <div class="reveal">
                 <span class="eyebrow">Visítanos</span>
                 <h2 class="title">¿Dónde estamos?</h2>
@@ -1405,14 +1127,7 @@ body.ready .hero-inner > *:nth-child(5){animation-delay:.48s;}
                             <p>Bochica Sur · Bogotá</p>
                         </div>
                     </div>
-                    <div class="loc-row">
-                        <i class="fa-solid fa-church"></i>
-                        <div>
-                            <h4>Servicio principal</h4>
-                            <p>Domingos · 10:00 AM</p>
-                        </div>
-                    </div>
-                    <a class="btn btn-primary"
+                    <a class="btn"
                        href="https://www.google.com/maps/search/?api=1&query=Cra.+5J+%2348-61+Bogota+Colombia"
                        target="_blank" rel="noopener">
                         <i class="fa-solid fa-diamond-turn-right"></i> Abrir en Google Maps
@@ -1430,7 +1145,7 @@ body.ready .hero-inner > *:nth-child(5){animation-delay:.48s;}
         </div>
 
         <!-- Redes -->
-        <div class="section" id="redes">
+        <div class="section">
             <div class="reveal">
                 <span class="eyebrow">Conéctate</span>
                 <h2 class="title">Síguenos en redes</h2>
@@ -1466,45 +1181,18 @@ body.ready .hero-inner > *:nth-child(5){animation-delay:.48s;}
         </svg>
     </div>
 
-    <div class="footer-grid">
-        <div>
-            <div class="footer-brand">
-                <img src="logo1.png" alt="IPUC" onerror="this.style.display='none'">
-                <h3>IPUC Bochica Sur</h3>
-            </div>
-            <p>Iglesia Pentecostal Unida de Colombia. Una comunidad que busca a Dios,
-               ama su Palabra y sirve con alegría.</p>
-            <div class="footer-social">
-                <a href="https://www.facebook.com/share/1DphkF5di3/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/ipucbochicadecom/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@ipuc_bochica" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="https://ipuc.org.co/" target="_blank" rel="noopener" aria-label="IPUC"><i class="fa-solid fa-globe"></i></a>
-            </div>
-        </div>
-
-        <div>
-            <h4>Horarios</h4>
-            <ul class="footer-list">
-                <li><span>Dorcas · Martes</span><span>7:00 PM</span></li>
-                <li><span>Oración · Jueves</span><span>7:00 PM</span></li>
-                <li><span>Jóvenes · Sábados</span><span>7:00 PM</span></li>
-                <li><span>Esc. Dominical</span><span>10:00 AM</span></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4>Visítanos</h4>
-            <ul class="footer-list footer-contact">
-                <li><i class="fa-solid fa-location-dot"></i><span style="color:inherit">Carrera 5J No. 48L-61 Sur</span></li>
-                <li><i class="fa-solid fa-house"></i><span style="color:inherit">Barrio Bochica Sur, Bogotá</span></li>
-                <li><i class="fa-solid fa-globe"></i><span style="color:inherit">ipuc.org.co</span></li>
-            </ul>
-        </div>
+    <div class="footer-brand">
+        <img src="logo1.png" alt="IPUC" onerror="this.style.display='none'">
+        <h3>IPUC Bochica Sur</h3>
     </div>
+    <p class="footer-text">
+        Una comunidad que busca a Dios, ama su Palabra y sirve con alegría.
+    </p>
+
+    <span class="footer-script">Dios te bendiga</span>
 
     <div class="footer-bottom">
-        <span class="footer-script">Dios te bendiga</span>
-        © <span id="year">2026</span> IPUC Bochica Sur · Hecho con <i class="fa-solid fa-heart heart"></i> para la gloria de Dios
+        © <span id="year">2026</span> IPUC Bochica Sur · Donde Dios se glorifica
     </div>
 </footer>
 
@@ -1518,151 +1206,164 @@ body.ready .hero-inner > *:nth-child(5){animation-delay:.48s;}
 (function(){
     const body   = document.body;
     const intro  = document.getElementById('intro');
-    const canvas = document.getElementById('confetti');
-    const ctx    = canvas.getContext('2d');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    /* ---------- CONFETI ---------- */
-    const colors = ['#ff7b00','#f6c25b','#ffffff','#4f8cff','#ff4d8d','#2ed3a0','#ffd23f'];
-    let W, H, pieces = [], running = true;
+    /* ---------- ¿Ya vio la bienvenida en esta visita? ---------- */
+    let yaVisto = false;
+    try{ yaVisto = sessionStorage.getItem('bienvenidaVista') === '1'; }catch(e){}
 
-    function resize(){
-        const dpr = window.devicePixelRatio || 1;
-        W = canvas.clientWidth; H = canvas.clientHeight;
-        canvas.width = W * dpr; canvas.height = H * dpr;
-        ctx.setTransform(dpr,0,0,dpr,0,0);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    function rand(a,b){ return a + Math.random()*(b-a); }
-
-    function makePiece(x, y, vx, vy){
-        const shapes = ['rect','rect','circle','ribbon','star'];
-        return {
-            x, y, vx, vy,
-            size: rand(6,12),
-            color: colors[Math.floor(Math.random()*colors.length)],
-            shape: shapes[Math.floor(Math.random()*shapes.length)],
-            rot: rand(0,Math.PI*2),
-            vr: rand(-0.2,0.2),
-            tilt: rand(0,Math.PI*2),
-            vt: rand(0.05,0.15),
-            life: 0
-        };
-    }
-
-    // Cañones desde las esquinas inferiores
-    function burst(fromLeft, n){
-        for(let i=0;i<n;i++){
-            const x = fromLeft ? 0 : W;
-            const angle = fromLeft ? rand(-1.35,-0.7) : rand(-2.45,-1.8);
-            const speed = rand(11,20);
-            pieces.push(makePiece(x, H, Math.cos(angle)*speed, Math.sin(angle)*speed));
-        }
-    }
-    // Lluvia desde arriba
-    function rain(n){
-        for(let i=0;i<n;i++){
-            pieces.push(makePiece(rand(0,W), rand(-H*0.5,-10), rand(-1,1), rand(1,3)));
-        }
-    }
-
-    function drawStar(r){
-        ctx.beginPath();
-        for(let i=0;i<10;i++){
-            const rr = i%2 ? r*0.45 : r;
-            const a = i*Math.PI/5 - Math.PI/2;
-            ctx.lineTo(Math.cos(a)*rr, Math.sin(a)*rr);
-        }
-        ctx.closePath(); ctx.fill();
-    }
-
-    function loop(){
-        if(!running) return;
-        ctx.clearRect(0,0,W,H);
-        for(let i=pieces.length-1;i>=0;i--){
-            const p = pieces[i];
-            p.life++;
-            p.vy += 0.25;          // gravedad
-            p.vx *= 0.985;         // resistencia
-            p.vy = Math.min(p.vy, 4.5);
-            p.x += p.vx + Math.sin(p.life*0.05)*0.6;
-            p.y += p.vy;
-            p.rot += p.vr;
-            p.tilt += p.vt;
-
-            ctx.save();
-            ctx.translate(p.x,p.y);
-            ctx.rotate(p.rot);
-            ctx.fillStyle = p.color;
-            const s = p.size, sy = Math.abs(Math.cos(p.tilt));
-
-            if(p.shape==='rect'){
-                ctx.fillRect(-s/2, -s*sy/2, s, s*0.6*sy+1);
-            }else if(p.shape==='circle'){
-                ctx.beginPath(); ctx.arc(0,0,s/2.4,0,Math.PI*2); ctx.fill();
-            }else if(p.shape==='ribbon'){
-                ctx.strokeStyle = p.color; ctx.lineWidth = 2.5;
-                ctx.beginPath();
-                ctx.moveTo(-s,0);
-                ctx.bezierCurveTo(-s/2,-s*sy, s/2, s*sy, s, 0);
-                ctx.stroke();
-            }else{
-                drawStar(s/1.7);
-            }
-            ctx.restore();
-
-            if(p.y > H + 40) pieces.splice(i,1);
-        }
-        requestAnimationFrame(loop);
-    }
-
-    /* ---------- POMPONES ---------- */
-    const pomColors = [
-        'radial-gradient(circle at 35% 35%,#ffd08a,#ff7b00)',
-        'radial-gradient(circle at 35% 35%,#ffe9a8,#f2b233)',
-        'radial-gradient(circle at 35% 35%,#9cc0ff,#1d4fb3)',
-        'radial-gradient(circle at 35% 35%,#ffb3cf,#ff4d8d)',
-        'radial-gradient(circle at 35% 35%,#ffffff,#cfd8f0)'
-    ];
-    function pompom(){
-        const el = document.createElement('span');
-        el.className = 'pompom';
-        const size = rand(28,64);
-        el.style.width = el.style.height = size + 'px';
-        el.style.left = rand(2,95) + 'vw';
-        el.style.background = pomColors[Math.floor(Math.random()*pomColors.length)];
-        el.style.animationDuration = rand(4,7) + 's';
-        intro.appendChild(el);
-        setTimeout(()=>el.remove(), 7500);
-    }
-
-    if(!reduce){
-        loop();
-        setTimeout(()=>{ burst(true,90); burst(false,90); }, 350);
-        setTimeout(()=>rain(120), 900);
-        setTimeout(()=>{ burst(true,60); burst(false,60); }, 1900);
-        for(let i=0;i<14;i++) setTimeout(pompom, 300 + i*260);
-    }
-
-    /* ---------- CERRAR BIENVENIDA ---------- */
-    let closed = false;
-    function enter(){
-        if(closed) return;
-        closed = true;
-        intro.classList.add('hide');
+    function mostrarPagina(){
         body.classList.remove('loading');
         setTimeout(()=>body.classList.add('ready'), 350);
-        setTimeout(()=>{ running = false; intro.remove(); }, 1500);
     }
-    document.getElementById('enterBtn').addEventListener('click', enter);
-    setTimeout(enter, 5400);   // entra sola al terminar la barra
 
-    /* ---------- NAV / SCROLL ---------- */
-    const nav = document.getElementById('nav');
+    if(yaVisto){
+        intro.remove();
+        mostrarPagina();
+    }else{
+        iniciarBienvenida();
+    }
+
+    function iniciarBienvenida(){
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        const colors = ['#ff7b00','#f6c25b','#ffffff','#4f8cff','#ff4d8d','#2ed3a0','#ffd23f'];
+        let W, H, pieces = [], running = true;
+
+        function resize(){
+            const dpr = window.devicePixelRatio || 1;
+            W = canvas.clientWidth; H = canvas.clientHeight;
+            canvas.width = W * dpr; canvas.height = H * dpr;
+            ctx.setTransform(dpr,0,0,dpr,0,0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        const rand = (a,b) => a + Math.random()*(b-a);
+
+        function makePiece(x, y, vx, vy){
+            const shapes = ['rect','rect','circle','ribbon','star'];
+            return {
+                x, y, vx, vy,
+                size: rand(6,12),
+                color: colors[Math.floor(Math.random()*colors.length)],
+                shape: shapes[Math.floor(Math.random()*shapes.length)],
+                rot: rand(0,Math.PI*2),
+                vr: rand(-0.2,0.2),
+                tilt: rand(0,Math.PI*2),
+                vt: rand(0.05,0.15),
+                life: 0
+            };
+        }
+
+        // Cañones desde las esquinas inferiores
+        function burst(fromLeft, n){
+            for(let i=0;i<n;i++){
+                const angle = fromLeft ? rand(-1.35,-0.7) : rand(-2.45,-1.8);
+                const speed = rand(11,20);
+                pieces.push(makePiece(fromLeft ? 0 : W, H, Math.cos(angle)*speed, Math.sin(angle)*speed));
+            }
+        }
+        // Lluvia desde arriba
+        function rain(n){
+            for(let i=0;i<n;i++){
+                pieces.push(makePiece(rand(0,W), rand(-H*0.5,-10), rand(-1,1), rand(1,3)));
+            }
+        }
+
+        function drawStar(r){
+            ctx.beginPath();
+            for(let i=0;i<10;i++){
+                const rr = i%2 ? r*0.45 : r;
+                const a = i*Math.PI/5 - Math.PI/2;
+                ctx.lineTo(Math.cos(a)*rr, Math.sin(a)*rr);
+            }
+            ctx.closePath(); ctx.fill();
+        }
+
+        function loop(){
+            if(!running) return;
+            ctx.clearRect(0,0,W,H);
+            for(let i=pieces.length-1;i>=0;i--){
+                const p = pieces[i];
+                p.life++;
+                p.vy = Math.min(p.vy + 0.25, 4.5);
+                p.vx *= 0.985;
+                p.x += p.vx + Math.sin(p.life*0.05)*0.6;
+                p.y += p.vy;
+                p.rot += p.vr;
+                p.tilt += p.vt;
+
+                ctx.save();
+                ctx.translate(p.x,p.y);
+                ctx.rotate(p.rot);
+                ctx.fillStyle = p.color;
+                const s = p.size, sy = Math.abs(Math.cos(p.tilt));
+
+                if(p.shape==='rect'){
+                    ctx.fillRect(-s/2, -s*sy/2, s, s*0.6*sy+1);
+                }else if(p.shape==='circle'){
+                    ctx.beginPath(); ctx.arc(0,0,s/2.4,0,Math.PI*2); ctx.fill();
+                }else if(p.shape==='ribbon'){
+                    ctx.strokeStyle = p.color; ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    ctx.moveTo(-s,0);
+                    ctx.bezierCurveTo(-s/2,-s*sy, s/2, s*sy, s, 0);
+                    ctx.stroke();
+                }else{
+                    drawStar(s/1.7);
+                }
+                ctx.restore();
+
+                if(p.y > H + 40) pieces.splice(i,1);
+            }
+            requestAnimationFrame(loop);
+        }
+
+        // Pompones
+        const pomColors = [
+            'radial-gradient(circle at 35% 35%,#ffd08a,#ff7b00)',
+            'radial-gradient(circle at 35% 35%,#ffe9a8,#f2b233)',
+            'radial-gradient(circle at 35% 35%,#9cc0ff,#1d4fb3)',
+            'radial-gradient(circle at 35% 35%,#ffb3cf,#ff4d8d)',
+            'radial-gradient(circle at 35% 35%,#ffffff,#cfd8f0)'
+        ];
+        function pompom(){
+            const el = document.createElement('span');
+            el.className = 'pompom';
+            const size = rand(28,64);
+            el.style.width = el.style.height = size + 'px';
+            el.style.left = rand(2,95) + 'vw';
+            el.style.background = pomColors[Math.floor(Math.random()*pomColors.length)];
+            el.style.animationDuration = rand(4,7) + 's';
+            intro.appendChild(el);
+            setTimeout(()=>el.remove(), 7500);
+        }
+
+        if(!reduce){
+            loop();
+            setTimeout(()=>{ burst(true,90); burst(false,90); }, 350);
+            setTimeout(()=>rain(120), 900);
+            setTimeout(()=>{ burst(true,60); burst(false,60); }, 1900);
+            for(let i=0;i<14;i++) setTimeout(pompom, 300 + i*260);
+        }
+
+        let closed = false;
+        function enter(){
+            if(closed) return;
+            closed = true;
+            try{ sessionStorage.setItem('bienvenidaVista','1'); }catch(e){}
+            intro.classList.add('hide');
+            mostrarPagina();
+            setTimeout(()=>{ running = false; intro.remove(); }, 1500);
+        }
+        document.getElementById('enterBtn').addEventListener('click', enter);
+        setTimeout(enter, 5400);
+    }
+
+    /* ---------- SCROLL ---------- */
     const progress = document.getElementById('progress');
     const toTop = document.getElementById('toTop');
 
@@ -1670,22 +1371,10 @@ body.ready .hero-inner > *:nth-child(5){animation-delay:.48s;}
         const y = window.scrollY;
         const max = document.documentElement.scrollHeight - window.innerHeight;
         progress.style.width = (max > 0 ? (y/max)*100 : 0) + '%';
-        nav.classList.toggle('scrolled', y > 10);
         toTop.classList.toggle('show', y > 500);
     }, {passive:true});
 
     toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
-
-    const navLinks = document.getElementById('navLinks');
-    const navToggle = document.getElementById('navToggle');
-    navToggle.addEventListener('click', ()=>{
-        const open = navLinks.classList.toggle('open');
-        navToggle.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
-    });
-    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{
-        navLinks.classList.remove('open');
-        navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
-    }));
 
     /* ---------- REVELAR AL HACER SCROLL ---------- */
     const io = new IntersectionObserver(entries=>{
