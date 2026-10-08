@@ -783,15 +783,6 @@ main{
     border-color:rgba(255,123,0,.25);
     color:#c25800;
 }
-.service-num{
-    position:absolute;
-    right:20px;bottom:10px;
-    font-family:var(--f-title);
-    font-size:3.4rem;
-    font-weight:800;
-    color:rgba(11,42,107,.05);
-    line-height:1;
-}
 
 /* =====================================================
    BANNER
@@ -1007,45 +998,9 @@ main{
     gap:16px;
 }
 .fb-frame{max-width:100%;border-radius:16px;}
-
-.feed-promo{
-    align-self:center;
-    width:100%;
-    max-width:420px;
-    text-align:center;
-    padding:34px 26px;
-    border-radius:var(--radius);
-    background:linear-gradient(180deg,#fbfcff,#f3f6fd);
-    border:1px solid var(--line);
-}
-.feed-promo .promo-icon{
-    width:70px;height:70px;
-    margin:0 auto 14px;
-    border-radius:20px;
-    display:grid;place-items:center;
-    color:white;
-    font-size:1.8rem;
-    box-shadow:0 10px 22px rgba(0,0,0,.15);
-}
-.feed-promo.instagram .promo-icon{background:linear-gradient(45deg,#f9a825,#e1306c,#833ab4);}
-.feed-promo.facebook .promo-icon{background:#1877f2;}
-.feed-promo h4{
-    font-family:var(--f-title);
-    font-size:1.3rem;
-    color:var(--navy-800);
-}
-.feed-promo .user{
-    font-family:var(--f-label);
-    font-size:.8rem;
-    font-weight:700;
-    color:var(--orange);
-}
-.feed-promo p{
-    color:var(--muted);
-    font-size:.92rem;
-    margin:10px 0 18px;
-}
-.feed-promo .btn{margin-top:0;}
+.ig-frame{width:100%;max-width:900px;border:0;border-radius:16px;}
+.feed-tab[hidden],
+.feed-tabs[hidden]{display:none !important;}
 
 @media (max-width:400px){
     .feed-tab span{display:none;}
@@ -1391,7 +1346,7 @@ footer h4::after{
         <div class="welcome reveal" id="bienvenida">
             <span class="eyebrow">Bienvenidos</span>
             <h2 class="title">Una iglesia para toda la familia</h2>
-            <div class="title-deco"><i class="fa-solid fa-dove"></i></div>
+            <div class="title-deco"><i class="fa-solid fa-heart"></i></div>
 
             <p class="welcome-text">
                 Somos una iglesia comprometida con la enseñanza de la Palabra,
@@ -1422,7 +1377,6 @@ footer h4::after{
                         <span class="chip"><i class="fa-regular fa-calendar"></i> Martes</span>
                         <span class="chip time"><i class="fa-regular fa-clock"></i> 7:00 PM</span>
                     </div>
-                    <span class="service-num">01</span>
                 </article>
 
                 <article class="service reveal d2">
@@ -1432,7 +1386,6 @@ footer h4::after{
                         <span class="chip"><i class="fa-regular fa-calendar"></i> Jueves</span>
                         <span class="chip time"><i class="fa-regular fa-clock"></i> 7:00 PM</span>
                     </div>
-                    <span class="service-num">02</span>
                 </article>
 
                 <article class="service reveal d3">
@@ -1442,7 +1395,6 @@ footer h4::after{
                         <span class="chip"><i class="fa-regular fa-calendar"></i> Sábados</span>
                         <span class="chip time"><i class="fa-regular fa-clock"></i> 7:00 PM</span>
                     </div>
-                    <span class="service-num">03</span>
                 </article>
 
                 <article class="service reveal d4">
@@ -1452,7 +1404,6 @@ footer h4::after{
                         <span class="chip"><i class="fa-regular fa-calendar"></i> Domingos</span>
                         <span class="chip time"><i class="fa-regular fa-clock"></i> 10:00 AM</span>
                     </div>
-                    <span class="service-num">04</span>
                 </article>
             </div>
         </div>
@@ -1488,7 +1439,7 @@ footer h4::after{
                         </div>
                     </div>
                     <div class="loc-row">
-                        <i class="fa-solid fa-church"></i>
+                        <i class="fa-regular fa-clock"></i>
                         <div>
                             <h4>Servicio principal</h4>
                             <p>Domingos · 10:00 AM</p>
@@ -1516,7 +1467,7 @@ footer h4::after{
             <div class="reveal">
                 <span class="eyebrow">Conéctate</span>
                 <h2 class="title">Síguenos en redes</h2>
-                <div class="title-deco"><i class="fa-solid fa-heart"></i></div>
+                <div class="title-deco"><i class="fa-solid fa-share-nodes"></i></div>
             </div>
 
             <div class="social reveal d1">
@@ -1805,42 +1756,25 @@ footer h4::after{
     }));
 
     /* ---------- ÚLTIMAS PUBLICACIONES ---------- */
+    /* ===== CONFIGURACIÓN DE REDES =====
+       Una pestaña solo aparece si tiene publicaciones para mostrar.  */
     const FEED = {
-        // Dirección de la PÁGINA de Facebook (no el link de "compartir").
+        // FACEBOOK (automático): dirección de la PÁGINA, no el link de "compartir".
         // Ej: 'https://www.facebook.com/IPUCBochicaSur'
         facebookPage: '',
 
-        // Instagram no permite mostrar las últimas publicaciones automáticamente.
-        // Pega aquí los enlaces de las publicaciones que quieras mostrar.
+        // INSTAGRAM (automático): link del widget gratuito de LightWidget
+        // (lightwidget.com → conectas la cuenta → copias el link del widget).
+        // Ej: 'https://cdn.lightwidget.com/widgets/xxxxxxxx.html'
+        instagramWidget: '',
+
+        // INSTAGRAM (manual, opcional): enlaces de publicaciones específicas.
         // Ej: 'https://www.instagram.com/p/ABC123xyz/'
         instagramPosts: []
     };
 
-    const PROMO = {
-        instagram:{
-            icon:'fab fa-instagram', name:'Instagram', user:'@ipucbochicadecom',
-            url:'https://www.instagram.com/ipucbochicadecom/',
-            text:'Fotos, reels y los momentos especiales de nuestra iglesia.'
-        },
-        facebook:{
-            icon:'fab fa-facebook-f', name:'Facebook', user:'IPUC Bochica Sur',
-            url:'https://www.facebook.com/share/1DphkF5di3/',
-            text:'Anuncios, transmisiones y novedades de la congregación.'
-        }
-    };
-
-    function promo(type){
-        const p = PROMO[type];
-        return `<div class="feed-promo ${type}">
-            <div class="promo-icon"><i class="${p.icon}"></i></div>
-            <h4>Míranos en ${p.name}</h4>
-            <span class="user">${p.user}</span>
-            <p>${p.text}</p>
-            <a class="btn" href="${p.url}" target="_blank" rel="noopener">
-                <i class="${p.icon}"></i> Ver publicaciones
-            </a>
-        </div>`;
-    }
+    const hasInstagram = !!FEED.instagramWidget || FEED.instagramPosts.length > 0;
+    const hasFacebook  = !!FEED.facebookPage;
 
     function loadScript(src, cb){
         const s = document.createElement('script');
@@ -1860,7 +1794,11 @@ footer h4::after{
         }
 
         if(name === 'instagram'){
-            if(FEED.instagramPosts.length){
+            if(FEED.instagramWidget){
+                panel.innerHTML = `<iframe class="ig-frame" src="${FEED.instagramWidget}" height="620"
+                    scrolling="no" loading="lazy" allowtransparency="true"
+                    title="Publicaciones de Instagram"></iframe>`;
+            }else{
                 panel.innerHTML = '<div class="ig-grid">' + FEED.instagramPosts.map(u =>
                     `<blockquote class="instagram-media" data-instgrm-permalink="${u}" data-instgrm-version="14"
                         style="margin:0 auto;max-width:400px;width:100%;"></blockquote>`
@@ -1868,25 +1806,24 @@ footer h4::after{
                 loadScript('https://www.instagram.com/embed.js', ()=>{
                     if(window.instgrm) window.instgrm.Embeds.process();
                 });
-            }else{
-                panel.innerHTML = promo('instagram');
             }
         }
 
         if(name === 'facebook'){
-            if(FEED.facebookPage){
-                const w = Math.min(500, Math.max(180, panel.clientWidth));
-                const src = 'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(FEED.facebookPage) +
-                    `&tabs=timeline&width=${w}&height=650&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false`;
-                panel.innerHTML = `<iframe class="fb-frame" src="${src}" width="${w}" height="650"
-                    style="border:none;overflow:hidden" scrolling="no" frameborder="0" loading="lazy"
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                    title="Publicaciones de Facebook"></iframe>`;
-            }else{
-                panel.innerHTML = promo('facebook');
-            }
+            const w = Math.min(500, Math.max(180, panel.clientWidth));
+            const src = 'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(FEED.facebookPage) +
+                `&tabs=timeline&width=${w}&height=650&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false`;
+            panel.innerHTML = `<iframe class="fb-frame" src="${src}" width="${w}" height="650"
+                style="border:none;overflow:hidden" scrolling="no" frameborder="0" loading="lazy"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                title="Publicaciones de Facebook"></iframe>`;
         }
     }
+
+    // Ocultar las pestañas de las redes que aún no tienen publicaciones configuradas
+    if(!hasInstagram) document.querySelector('.feed-tab.ig').hidden = true;
+    if(!hasFacebook)  document.querySelector('.feed-tab.fb').hidden = true;
+    if(!hasInstagram && !hasFacebook) document.querySelector('.feed-tabs').hidden = true;
 
     document.querySelectorAll('.feed-tab').forEach(tab=>{
         tab.addEventListener('click', ()=>{
